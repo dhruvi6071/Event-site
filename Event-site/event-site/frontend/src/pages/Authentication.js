@@ -39,6 +39,13 @@ export async function action({request}) {
       throw json({message: 'Could not authenticate User'}, {status: 500});
     }
 
-    //manage Tocken;
+    //we need to store tokens so that we can authorize the user for some features such as delete etc.
+
+    const resData = await response.json();
+    const token = resData.token;
+
+    localStorage.setItem('token', token);
+
+    //To get back to home page
     return redirect('/');
 }
