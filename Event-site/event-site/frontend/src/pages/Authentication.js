@@ -44,7 +44,14 @@ export async function action({request}) {
     const resData = await response.json();
     const token = resData.token;
 
+    //This code executed first once we got the token.
     localStorage.setItem('token', token);
+
+    //Adding logic so that if page is reload though token time remaining remains same.
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    localStorage.setItem('expiration', expiration.toISOString());
+
 
     //To get back to home page
     return redirect('/');
